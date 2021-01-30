@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  slack_test:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - run:
+          name: Slack にメッセージを POST する
+          command: |
+            curl -X POST \
+            -H 'Content-type:application/json' \
+            --data "{'text':'Hi!'}" ${SLACK_WEBHOOK}
+workflows:
+  version: 2
+  main:
+    jobs:
+      - slack_test:
+          context: SLACK_INTEGRATION
